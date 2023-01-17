@@ -1,3 +1,5 @@
+*The Report Of Creating Pearson correlation coefficient using your own Algorithm*
+
 The Pearson correlation coefficient (PCC) is a measure of the linear correlation between two variables. It ranges from -1 (perfect negative correlation) to 1 (perfect positive correlation) and a value of 0 indicates no correlation. In Python, the PCC can be calculated using the pearsonr() function from the scipy.stats module.
 
 Calculating the Pearson correlation coefficient (PCC) in Python without using libraries is relatively straightforward. The PCC is defined as the covariance of two variables divided by the product of their standard deviations.
@@ -18,3 +20,7 @@ After which I used the above function to create another function by saving all t
 Now it becomes easy to pick two columns from the data frame convert them to lists or arrays and use the Pearson correlation equation I initially created to calculate the Pearson correlation coefficient of the two lists.
 **Creating Table**
 This is the most difficult part and it requires an advance level of manipulating symbols using for loops and if statements, I did my best but the problem lies in the padding section.
+
+**Problems encountered**
+It's not new that one can't store all the syntax in one's memory, but with the help of some online platform like stackoverflow the problem was solved.
+Padding was the items in the table was not easy but I did my best to make the table more understandable.
