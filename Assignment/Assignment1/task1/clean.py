@@ -1,68 +1,46 @@
-import csv
 import pandas as pd
 import numpy as np
-
-def crop(file):
-    main = []
-    df=pd.read_csv(file, iterator=True, chunksize=1000, delimiter=";")
-    for chunk in df:
-        chunk=chunk.fillna('0')
-        old_ti=[]
-        new_ti=[]
-        for i in chunk["Date Time"]:
-            if len(i)==25:
-                val=i[0]+i[1]+i[2]+i[3]
-                
-                if int(val) >= 2010:
-                    new_ti.append(i)
-                    old_ti.append(i)
-                else:
-                    new_ti.append(np.nan)
-                    old_ti.append(i)
-            else:
-                new_ti.append(np.nan)
-                old_ti.append(i)
-        chunk["Date Time"]=chunk["Date Time"].replace(old_ti, new_ti)
-        new_df=chunk.dropna()
-
-        # new_df.to_csv("crop.csv", index=False)
-        new_df.reset_index()
+import csv
+import os
 
 
-
-        head=""
-        a=0
-        for i in new_df:
-            if a==0:
-                head=head+i
-                a+=1
-            else:
-                head=head+";"+i
-                a+=1
-
-        a=""
-        li=[]
-        for i in range(len(new_df)):
-            for j in range(len(new_df.iloc[i])):
-                if j==0:
-                    a=a+str(new_df.iloc[i][j])
-                else:
-                    a=str(a)+";"+str(new_df.iloc[i][j])
-                    
-            li.append(a)
-            a=""
-            
-        dicts={head:li}
-        last_df=pd.DataFrame(dicts)
-        main.append(last_df)
-    final_main=pd.concat(main)
-    final_main.to_csv("crop.csv", index=False)
-    print("Do not open file yet, wait for code to finish running.....")
-    with open('crop.csv', 'r') as file:
-        data=file.read()
-        data = data.replace("\"", "")
-        with open("crop.csv", "w") as output:
-            output.write(data)
-    return "Done"
+def clean(file):
     
-crop("files.csv")
+    main = []
+    df=pd.read_csv(file, iterator=True, chunksize=1000, sep=";")
+
+    for chunk in df:
+        chunk.to_csv('file.csv', index=False)
+        pf=pd.read_csv('file.csv')
+        chunked=pf.fillna(' ')
+        
+
+        old_li=[]
+        new_li=[]
+        for i in chunked.get("SiteID"):
+            if i=="" or type(i)!=int:
+                old_li.append(i)
+                i=np.nan
+                new_li.append(i)
+            else:
+                old_li.append(i)
+                new_li.append(i)
+
+        chunked["SiteID"]=chunked["SiteID"].replace(old_li, new_li)
+        new_df=chunked.dropna()
+
+
+        main.append(new_df)
+    final_main=pd.concat(main)
+    final_main.to_csv("clean.csv", index=False)
+    os.remove('file.csv')
+    print("Do not open file yet, wait for code to finish running.....")
+    with open('clean.csv', 'r') as file:
+        data=file.read()
+        data = data.replace(";", ",").replace("\"", "")
+        with open("clean.csv", "w") as output:
+            output.write(data)
+    return 'Done'
+
+
+clean("crop.csv")
