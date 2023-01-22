@@ -57,5 +57,5 @@ def crop(file):
         main.append(last_df)
     final_main=pd.concat(main)
     final_main.to_csv("crop.csv", index=False)
-    
+    return 'Done'    
 crop("air-quality-data-continuous.csv")
