@@ -1,68 +1,68 @@
+import csv
 import pandas as pd
 import numpy as np
-import csv
 
-
-def clean(file):
-    
+def crop(file):
     main = []
-    df=pd.read_csv('Book1.csv', iterator=True, chunksize=1000, sep=";")
-    
+    df=pd.read_csv(file, iterator=True, chunksize=1000, delimiter=";")
     for chunk in df:
-        chunk.to_csv('file.csv', index=False)
-        pf=pd.read_csv('file.csv')
-        chunked=pf.fillna('')
-
-        old_li=[]
-        new_li=[]
-        for i in chunked.get("SiteID"):
-            if i=="" or type(i)==int:
-                old_li.append(i)
-                i=np.nan
-                new_li.append(i)
+        chunk=chunk.fillna('0')
+        old_ti=[]
+        new_ti=[]
+        for i in chunk["Date Time"]:
+            if len(i)==25:
+                val=i[0]+i[1]+i[2]+i[3]
+                
+                if int(val) >= 2010:
+                    new_ti.append(i)
+                    old_ti.append(i)
+                else:
+                    new_ti.append(np.nan)
+                    old_ti.append(i)
             else:
-                old_li.append(i)
-                new_li.append(i)
+                new_ti.append(np.nan)
+                old_ti.append(i)
+        chunk["Date Time"]=chunk["Date Time"].replace(old_ti, new_ti)
+        new_df=chunk.dropna()
 
-        chunked["SiteID"]=chunked["SiteID"].replace(old_li, new_li)
-        new_df=chunked.dropna()
+        # new_df.to_csv("crop.csv", index=False)
+        new_df.reset_index()
 
 
 
-        # head=""
-        # a=0
-        # for i in new_df:
-        #     if a==0:
-        #         head=head+i
-        #         a+=1
-        #     else:
-        #         head=head+";"+i
-        #         a+=1
+        head=""
+        a=0
+        for i in new_df:
+            if a==0:
+                head=head+i
+                a+=1
+            else:
+                head=head+";"+i
+                a+=1
 
-        # a=""
-        # li=[]
-        # for i in range(len(new_df)):
-        #     for j in range(len(new_df.iloc[i])):
-        #         if j==0:
-        #             a=a+new_df.iloc[i][j]
-        #         else:
-        #             a=a+";"+new_df.iloc[i][j]
+        a=""
+        li=[]
+        for i in range(len(new_df)):
+            for j in range(len(new_df.iloc[i])):
+                if j==0:
+                    a=a+str(new_df.iloc[i][j])
+                else:
+                    a=str(a)+";"+str(new_df.iloc[i][j])
                     
-        #     li.append(a)
-        #     a=""
+            li.append(a)
+            a=""
             
-        # dicts={head:li}
-        # last_df=pd.DataFrame(dicts)
-
-        main.append(new_df)
+        dicts={head:li}
+        last_df=pd.DataFrame(dicts)
+        main.append(last_df)
     final_main=pd.concat(main)
-    final_main.to_csv("clean.csv", index=False)
+    final_main.to_csv("crop.csv", index=False)
     print("Do not open file yet, wait for code to finish running.....")
-    with open('clean.csv', 'r') as file:
+    with open('crop.csv', 'r') as file:
         data=file.read()
-        data = data.replace(";", ",").replace("\"", "")
-        with open("clean.csv", "w") as output:
+        data = data.replace("\"", "")
+        with open("crop.csv", "w") as output:
             output.write(data)
-    # print("You can now open file")
-
-clean("crop.csv")
+    return "Done"
+    
+crop("files.csv")
