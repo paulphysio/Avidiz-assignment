@@ -37,7 +37,7 @@ def clean(file):
     print("Do not open file yet, wait for code to finish running.....")
     with open('clean.csv', 'r') as file:
         data=file.read()
-        data = data.replace(";", ",").replace("\"", "")
+        data = data.replace(";", ",")
         with open("clean.csv", "w") as output:
             output.write(data)
     return 'Done'
