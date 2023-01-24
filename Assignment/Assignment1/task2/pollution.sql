@@ -10,18 +10,18 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 
 
 -- -----------------------------------------------------
--- Schema pollution
+-- Schema pollution_db
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `exam` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
-USE `pollution` ;
+CREATE SCHEMA IF NOT EXISTS `pollution_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `pollution_db ` ;
 
 
 
 
 -- -----------------------------------------------------
--- Table `pollution`.`category`
+-- Table `pollution_db `.`category`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `exam`.`category` (
+CREATE TABLE IF NOT EXISTS `pollution_db `.`category` (
   `category_id` INT NULL DEFAULT NULL,
   `category_name` VARCHAR(255) NULL DEFAULT NULL)
 ENGINE = InnoDB
@@ -30,9 +30,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `pollution`.`SCHEMAS`
+-- Table `pollution_db `.`SCHEMAS`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `exam`.`SCHEMAS` (
+CREATE TABLE IF NOT EXISTS `pollution_db `.`SCHEMAS` (
   `MEASURE` VARCHAR(32) NULL DEFAULT NULL,
   `DESCRIPTION` VARCHAR(64) NULL DEFAULT NULL,
   `UNIT` VARCHAR(24) NULL DEFAULT NULL)
@@ -42,9 +42,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `pollution`.`STATIONS`
+-- Table `pollution_db `.`STATIONS`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `exam`.`STATIONS` (
+CREATE TABLE IF NOT EXISTS `pollution_db `.`STATIONS` (
   `STATION_ID` INT NOT NULL,
   `LOCATION` VARCHAR(48) NULL DEFAULT NULL,
   `GEO_POINT_2D` INT NULL DEFAULT NULL,
@@ -55,9 +55,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `pollution`.`reading`
+-- Table `pollution_db `.`reading`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `exam`.`reading` (
+CREATE TABLE IF NOT EXISTS `pollution_db `.`reading` (
   `product_id` INT NOT NULL,
   `datetime` DATETIME NULL DEFAULT NULL,
   `NOx` FLOAT NULL DEFAULT NULL,
