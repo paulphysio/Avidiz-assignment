@@ -1,0 +1,21 @@
+Measure,Description,unit
+Date Time,Date and time of measurement,datetime
+Nox,Concentration of oxides of nitrogen,Ug/m3
+NO2,Concentration of nitrogen dioxide,Ug/m3
+NO,Concentration of nitric oxide,Ug/m3
+PM10,Concentration of particulate matter <10 micron diameter,Ug/m3
+NVPM10,Concentration of non-volatile particulate matter <10 micro diameter,Ug/m3
+VPM10,Concentration pf volatile particulate <10 micron diameter,Ug/m3
+NVPM2.5,Concentration of non-volatile particulate matter <2.5 micro diameter,Ug/m3
+PM2.5,Concentration of particulate matter <2.5 micron diameter,Ug/m3
+VPM2.5,Concentration pf volatile particulate <2.5 micron diameter,Ug/m3
+CO,Concentration of carbon monoxide,Ug/m3
+O3,Concentration of ozone,Ug/m3
+SO2,Concentration of sulphur dioxide,Ug/m3
+Temperature,Air Temperature,C
+RH,Relative humidity,%
+Air Pressure,Air pressure,mbar
+DateStart,The date monitoring started,datetime
+DateEnd,The date monitoring ended,datetime
+Current,Is the monitor currently operating,text
+Instrument Type,Classification of the instrument,text
