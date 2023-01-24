@@ -58,7 +58,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `pollution_db `.`reading`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pollution_db `.`reading` (
-  `product_id` INT NOT NULL,
+  `reading_id` INT NOT NULL,
   `datetime` DATETIME NULL DEFAULT NULL,
   `NOx` FLOAT NULL DEFAULT NULL,
   `NO2` FLOAT NULL DEFAULT NULL,
