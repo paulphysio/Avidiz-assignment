@@ -4,11 +4,17 @@ from mysql.connector import Error
 import pandas as pd
 
 
+con = mysql.connector.connect(host='localhost', user='root', password='Obinnap.com350')
+cursor = con.cursor()
+cursor.execute('DROP DATABASE IF EXISTS pollution_db2;')
+cursor.execute('CREATE DATABASE pollution_db2;')
 
 empdata = pd.read_csv('clean.csv', delimiter = ',')
 df = pd.read_csv('Schemas.csv', delimiter = ',')
 loc_df=pd.DataFrame({'ID':[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19], 'Location':['AURN Bristol Centre','Brislington Depot','Rupert Street','IKEA M32','Old Market','Parson Street School','Temple Meads Station','Wells Road','Trailer Portway P&R','Newfoundland Road Police Station',"Shiner's Garage",'AURN St Pauls','Bath Road','Cheltenham Road \ Station Road','Fishponds Road','CREATE Centre Roof','Temple Way','Colston Avenue','Marlborough Street'], 'geolocation':['51.4572041156, -2.58564914143','51.4425372726, -2.55995583224', '51.4554331987, -2.59626237324', '51.472551274248936, -2.5648000171332783', '51.4560189999, -2.58348949026', '51.432675707, -2.60495665673', '51.44832588498618, -2.58276986010026', '51.4278638883, -2.56374153315','51.4899934596, -2.68877856929', '51.4610199950486, -2.582618611439765','51.4577930324, -2.56271419977', '51.4628294172, -2.58454081635', '51.4425372726, -2.57137536073', '51.467404601530994, -2.591354888800722', '51.47521197714306, -2.5441866427744717', '51.44726232285324, -2.6222217159231587','51.45273269546031, -2.5841635446239657', '51.455269382758324, -2.596648828557916','51.459843866089386, -2.593398686952629'  ]})
 
+
+#DATAFRAME FOR THE STATION TABLE
 new_df=empdata.drop(columns="geo_point_2d").fillna(0)
 for i,row in new_df.iterrows():
             #here %S means string values 
