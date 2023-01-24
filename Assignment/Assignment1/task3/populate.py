@@ -58,14 +58,14 @@ try:
         cursor.execute("select database();")
         record = cursor.fetchone()
         print("You're connected to database: ", record)
-        cursor.execute('DROP TABLE IF EXISTS pollution_table;')
-        cursor.execute('DROP TABLE IF EXISTS location_table;')
-        cursor.execute('DROP TABLE IF EXISTS schemas_table;')
+        cursor.execute('DROP TABLE IF EXISTS readings;')
+        cursor.execute('DROP TABLE IF EXISTS stations;')
+        cursor.execute('DROP TABLE IF EXISTS schema_table;')
         print('Creating table....')
 # in the below line please pass the create table statement which you want #to create
-        cursor.execute("CREATE TABLE `pollution_db2`.`pollution_table` ( `Date Time` datetime, `NOx` double, `NO2` double, `NO` double, `SiteID` int, `PM10` double, `NVPM10` text, `VPM10` text, `NVPM2.5` text, `PM2.5` text, `VPM2.5` text, `CO` text, `O3` text, `SO2` text, `Temperature` text, `RH` text, `Air Pressure` text, `Location ID` int, `DateStart` text, `DateEnd` text, `Current` text, `Instrument Type,` text)")
-        cursor.execute("CREATE TABLE `pollution_db2`.`location_table` (`ID` int, `location` text, `geolocation` text )")
-        cursor.execute("CREATE TABLE `pollution_db2`.`schemas_table` (`measure` text, `description` text, `unit` text )")
+        cursor.execute("CREATE TABLE `pollution_db2`.`readings` ( `Date Time` datetime, `NOx` double, `NO2` double, `NO` double, `SiteID` int, `PM10` double, `NVPM10` text, `VPM10` text, `NVPM2.5` text, `PM2.5` text, `VPM2.5` text, `CO` text, `O3` text, `SO2` text, `Temperature` text, `RH` text, `Air Pressure` text, `Location ID` int, `DateStart` text, `DateEnd` text, `Current` text, `Instrument Type,` text)")
+        cursor.execute("CREATE TABLE `pollution_db2`.`stations` (`ID` int, `location` text, `geolocation` text )")
+        cursor.execute("CREATE TABLE `pollution_db2`.`schema_table` (`measure` text, `description` text, `unit` text )")
 
         print("Table is created....")
         #loop through the data frame
@@ -74,7 +74,7 @@ try:
             #here %S means string values 
            
             #here %S means string values 
-            sql = "INSERT INTO pollution_db2.location_table VALUES (%s,%s,%s)"
+            sql = "INSERT INTO pollution_db2.stations VALUES (%s,%s,%s)"
             cursor.execute(sql, tuple(row))
             print("Record inserted")
             # the connection is not auto committed by default, so we must commit to save our changes
@@ -83,7 +83,7 @@ try:
             #here %S means string values 
            
             #here %S means string values 
-            sql = "INSERT INTO pollution_db2.schemas_table VALUES (%s,%s,%s)"
+            sql = "INSERT INTO pollution_db2.schema_table VALUES (%s,%s,%s)"
             cursor.execute(sql, tuple(row))
             print("Record inserted")
             # the connection is not auto committed by default, so we must commit to save our changes
@@ -92,7 +92,7 @@ try:
             #here %S means string values 
            
             #here %S means string values 
-            sql = "INSERT INTO pollution_db2.pollution_table VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            sql = "INSERT INTO pollution_db2.readings VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             cursor.execute(sql, tuple(row))
             print("Record inserted")
             # the connection is not auto committed by default, so we must commit to save our changes
