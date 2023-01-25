@@ -1,5 +1,7 @@
 create table NEWDATE(`Date Time` datetime, `PM2.5` text, `VPM2.5` text, `location` text);
-INSERT INTO newdate select date_format(`Date Time`,'2019-%m-%d 08:%m:%S'), `PM2.5`, `VPM2.5`, `location` FROM pollution_db2.pollution_table where `Date Time` between '2019-01-01' and '2019-12-31';
+ALTER TABLE NEWDATE
+MODIFY COLUMN `Date Time` DATETIME;
+INSERT INTO newdate select date_format(`Date Time`,'2019-%m-%d 08:%m:%S'), `PM2.5`, `VPM2.5`, `location id` FROM pollution_db2.readings where `Date Time` between '2019-01-01' and '2019-12-31';
 
 SELECT AVG(`PM2.5`), AVG(`VPM2.5`) FROM newdate where location= 'AURN Bristol Centre';
 SELECT AVG(`PM2.5`), AVG(`VPM2.5`) FROM newdate where location= 'Brislington Depot';
