@@ -1,34 +1,27 @@
-NoSQL and the Key-Value Data Model
-NoSQL databases, also known as non-relational databases, are a newer type of database that have gained popularity in recent years due to their ability to handle large amounts of unstructured data. One of the most popular types of NoSQL databases is the key-value data model, which is used to store and retrieve data using a key-value pair.
+Introduction
+Air pollution is a major public health concern, and monitoring the levels of various pollutants in the air is crucial for understanding and mitigating its effects. The data provided in this report contains information on the concentrations of various pollutants, including oxides of nitrogen, nitrogen dioxide, nitric oxide, particulate matter, carbon monoxide, ozone, and sulfur dioxide, as well as air temperature, relative humidity, air pressure, and location. This report will outline the data model used to implement this data in a MongoDB database, and discuss the relevant implementation details.
 
-Using the Key-Value Data Model to Select a Particular Date from a CSV File
-In order to select a particular date from a CSV file using the key-value data model, we will first need to import the CSV file into a NoSQL database such as MongoDB. Once the data has been imported, we can then use the key-value data model to query the database for the specific date that we are looking for.
+Data Model
+The data model used for this implementation is a document-based model, where each document represents a single station and contains all of the data for that station. The main fields of the document include:
 
-Here is an example of how this might be done using MongoDB:
+SiteID: an integer representing the ID of the station
+Location: a text description of the location of the station
+geo_point_2d: a latitude and longitude geo point representing the location of the station
+DateStart: the date monitoring started for the station
+DateEnd: the date monitoring ended for the station
+Current: a text field indicating whether the monitor is currently operating
+Instrument: the type of instrument used for monitoring
+Measurements: an array of sub-documents, each representing a single measurement taken at the station. Each sub-document includes fields for the date and time of the measurement, as well as the concentrations of various pollutants and meteorological data.
+The data model is illustrated in the following diagram:
 
-Copy code
-// Connect to the MongoDB database
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://<username>:<password>@cluster.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // Perform the query to select the date
-  collection.find({"date": "2022-01-01"}).toArray(function(err, result) {
-    if (err) throw err;
-    console.log(result);
-    client.close();
-  });
-});
-In this example, we are connecting to a MongoDB database using the MongoClient object, and then specifying the collection (in this case "devices") that we want to query. The collection.find() method is then used to query the collection for all documents with a "date" field equal to "2022-01-01". The results of the query are returned as an array and printed to the console.
+Data Model Diagram
 
-It's worth noting that, since MongoDB is a document-oriented database, the data stored in it is represented as a JSON document, and querying can be done using MongoDB's query language.
+Implementation
+The data was imported into MongoDB using the mongoimport command, with the --jsonArray option to indicate that the data is in JSON format and that each line of the file represents a single document. The --drop option was also used to drop any existing collections with the same name before importing the data.
 
-Implementation Details
-When importing the CSV file into MongoDB, we will need to use a tool such as the MongoDB Connector for BI or the mongoimport command-line tool. These tools will allow us to easily import the data from the CSV file into the MongoDB database.
+After importing the data, indexing was implemented on the SiteID field to improve query performance. This allows for efficient querying and retrieval of data for a specific station. Additionally, a 2D index was created on the geo_point_2d field to support geospatial querying and enable efficient retrieval of data for stations within a specific geographic area.
 
-Once the data has been imported, we can then use the MongoDB query language to select the specific date that we are looking for. As shown in the example above, this can be done using the collection.find() method, which allows us to specify a query that filters the documents in the collection based on the specified criteria.
+The data was then queried and analyzed using the MongoDB Aggregation Framework, which allows for powerful data manipulation and analysis. For example, the average concentrations of pollutants for each station were calculated, as well as the maximum and minimum concentrations for each pollutant. Additionally, the number of measurements taken at each station was determined, and the stations with the most measurements were identified.
 
-It is also possible to use indexing to improve the performance of queries in MongoDB. By indexing the "date" field, for example, MongoDB will be able to more quickly locate the documents that match the query criteria, resulting in faster query performance.
-
-In conclusion, the key-value data model is a powerful way to store and retrieve data in a NoSQL database such as MongoDB. By using the key-value data model and MongoDB's query language, we can easily select a particular date from a CSV file, and improve the performance of our queries through the use of indexing.
+Conclusion
+The data model used for this implementation is a document-based model, where each document represents a single station and contains all of the data for that station. The implementation in MongoDB allows for efficient querying and retrieval of data for specific stations, as well as powerful data analysis through the use of the MongoDB Aggregation Framework. This data model and implementation provide a useful tool for understanding and mitigating the effects of air pollution.
